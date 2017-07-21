@@ -153,3 +153,17 @@ public interface IPaymentResultPersistService {
 #### 注册方式
 
 >使用@LevelAnnotation进行注册，LevelAnnotation中level属性最大的实现会被启用
+
+### IPrepayProcess
+>这个接口在执行实际的支付之前调用，可以让通过这个接口对支付之后的参数进行干预，特别是在一张单据多次支付的情况下，可以通过这个接口重置支付的业务单据号
+
+```java
+public interface IPrepayProcess {
+	PayData process(DefaultContext context,PayData data);
+}
+```
+
+#### 函数
+* process
+
+	处理函数，第二个参数是支付信息，里面包含了ticketNO,desc,amount,这里amount是以分为单位的一个long型数字,需要返回一个PayData
